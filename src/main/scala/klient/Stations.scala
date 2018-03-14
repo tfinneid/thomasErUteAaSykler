@@ -1,3 +1,5 @@
+package klient
+
 import java.util.Date
 
 case class BysykkelStatus(val stations: List[Station], val updatedTime: Date, val refreshRate: Double)

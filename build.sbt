@@ -8,6 +8,9 @@ cancelable in Global := true
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"
+libraryDependencies += "com.sparkjava" % "spark-core" % "2.7.2"
+//libraryDependencies += "com.typesafe.play" %% "play-ws" % "2.6.12"
+libraryDependencies += "com.typesafe.play" %% "play-ahc-ws-standalone" % "1.1.6"
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % "2.12.1",
