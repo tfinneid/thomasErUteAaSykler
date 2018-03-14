@@ -1,4 +1,4 @@
-package klient
+package div
 
 import org.scalatest._
 

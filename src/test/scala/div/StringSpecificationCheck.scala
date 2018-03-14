@@ -1,5 +1,7 @@
-import org.scalacheck.Properties
+package div
+
 import org.scalacheck.Prop.forAll
+import org.scalacheck.Properties
 
 object StringSpecificationCheck extends Properties("String") {
 

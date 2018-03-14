@@ -11,7 +11,10 @@ libraryDependencies += "com.sparkjava" % "spark-core" % "2.7.2"
 libraryDependencies += "com.typesafe.play" %% "play-ahc-ws-standalone" % "1.1.6"
 
 //libraryDependencies += "com.typesafe.play" % "play-json_2.11" % "2.4.6"
-libraryDependencies += "com.typesafe.play" %% "play-ws-standalone-json" % "1.1.6"
+//libraryDependencies += "com.typesafe.play" %% "play-ws-standalone-json" % "1.1.6"
+
+libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.9"
+libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.9"
 
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"

@@ -1,4 +1,4 @@
-package tjeneste
+package div
 
 import org.scalatest._
 
