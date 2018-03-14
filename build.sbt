@@ -6,16 +6,15 @@ cancelable in Global := true
 
 //packageOptions in (Compile, packageBin) += Package.ManifestAttributes( "Main-Class" -> "com.Main" )
 
-libraryDependencies += "com.sparkjava" % "spark-core" % "2.7.2"
+// sync-play
 //libraryDependencies += "com.typesafe.play" %% "play-ws" % "2.6.12"
-libraryDependencies += "com.typesafe.play" %% "play-ahc-ws-standalone" % "1.1.6"
 
-//libraryDependencies += "com.typesafe.play" % "play-json_2.11" % "2.4.6"
-//libraryDependencies += "com.typesafe.play" %% "play-ws-standalone-json" % "1.1.6"
+libraryDependencies += "com.mashape.unirest" % "unirest-java" % "1.4.9"
+
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.9"
 libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.9"
-
+libraryDependencies += "com.sparkjava" % "spark-core" % "2.7.2"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"
