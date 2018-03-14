@@ -11,10 +11,11 @@ case class SykkelStativ(id: Int, title: String, number_of_locks: Int)
 
 object ThomasErUteAaSykler extends App {
 
-  val bysykkelTjeneste = new BysykkelTjenesteHjelper("localhost", 4567)
+  val sykkellås = new Sykkeloppsett("bysykkel.conf")
+  val bysykkelTjeneste = new BysykkelTjenesteHjelper(sykkellås)
 
-  val sykkelstativStatus = bysykkelTjeneste.getStationsStatus
-  visTabellFormat(bysykkelTjeneste.getAvailabilityCall, sykkelstativStatus)
+  val sykkelstativStatus = bysykkelTjeneste.getStations
+  visTabellFormat(bysykkelTjeneste.getAvailability, sykkelstativStatus)
 
   bysykkelTjeneste.shutdown
 
@@ -32,4 +33,29 @@ object ThomasErUteAaSykler extends App {
       }
     )
   }
+}
+
+class Sykkeloppsett(private val konfigfil: String) {
+
+  import java.io.FileInputStream
+  import java.util.Properties
+
+  import scala.collection.JavaConverters._
+
+  val prop: Map[String, String] =
+    try {
+      val javaProp = new Properties
+      javaProp.load(new FileInputStream(konfigfil))
+      javaProp.asScala.toMap
+    } catch {
+      case ex: Exception => {
+        println(s"TERMINAL ERROR: ${ex.getMessage}")
+        System.exit(1)
+        null
+      }
+    }
+
+  val clientIdentifier: String = prop("client.identifier")
+  val host: String = prop("server.host")
+  val port: Int = prop("server.port").toInt
 }

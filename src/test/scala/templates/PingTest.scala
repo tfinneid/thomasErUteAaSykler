@@ -1,4 +1,4 @@
-package div
+package templates
 
 import org.scalatest._
 

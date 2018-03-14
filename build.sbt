@@ -6,11 +6,7 @@ cancelable in Global := true
 
 //packageOptions in (Compile, packageBin) += Package.ManifestAttributes( "Main-Class" -> "com.Main" )
 
-// sync-play
-//libraryDependencies += "com.typesafe.play" %% "play-ws" % "2.6.12"
-
 libraryDependencies += "com.mashape.unirest" % "unirest-java" % "1.4.9"
-
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.9"
 libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.9"
