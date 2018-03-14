@@ -1,0 +1,19 @@
+syntax: glob
+*.iml
+*~
+.idea
+.history
+.idea_modules
+.classpath
+.project
+.settings
+.git
+target
+project
+out
+data
+logs
+dist
+tmp
+RUNNING_PID
+
