@@ -23,7 +23,7 @@ object ThomasErUteAaSykler extends App {
     visTabellFormat(bysykkelStatus, sykkelstativStatus)
   } catch {
     case se: WebServerException => println(s"FEIL: Noe er galt med serveren, prøv igjen senere.\n$se")
-    case ce: WebClientException => println(s"FEIL: Noe er galt med oppsettet på/spørringen fra -klienten din.\n $ce")
+    case ce: WebClientException => println(s"FEIL: Noe er galt med oppsettet på/spørringen fra -klienten din.\n$ce")
     case ex: UnirestException => println(s"FEIL: Klarer ikke å fullføre forespøresel til Bysykkeltjeneren.\n$ex")
   } finally {
     bysykkelTjeneste.shutdown

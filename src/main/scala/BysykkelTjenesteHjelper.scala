@@ -15,7 +15,7 @@ class BysykkelTjenesteHjelper(val sykkeloppsett: Sykkeloppsett) {
   val mapper = new ObjectMapper()
   mapper.registerModule(DefaultScalaModule)
   mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-  /** Påkrevd deserliasiseringsegenskap */
+  /** Standard, men spesifikt ønsket deserliasiseringsegenskap */
   mapper.configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, false)
 
 
