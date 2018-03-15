@@ -1,5 +1,3 @@
-package play_klient
-
 import java.util.Date
 
 case class BysykkelStatus(stations: List[Station], updated_at: Date, refresh_rate: Double)
@@ -15,23 +13,30 @@ object ThomasErUteAaSykler extends App {
   val bysykkelTjeneste = new BysykkelTjenesteHjelper(sykkellås)
 
   val sykkelstativStatus = bysykkelTjeneste.getStations
-  visTabellFormat(bysykkelTjeneste.getAvailability, sykkelstativStatus)
+  val bysykkelStatus = bysykkelTjeneste.getAvailability
+
+  visTabellFormat(bysykkelStatus, sykkelstativStatus)
 
   bysykkelTjeneste.shutdown
 
   def visTabellFormat(status: BysykkelStatus, sykkelStativer: SykkelstativStatus): Unit = {
 
     println(s"\n\nBysykkelstatus  --  (oppdatert ${status.updated_at}, oppdateringsintervall: ${status.refresh_rate} sekunder)\n")
+    printf("%-31s %13s %8s %10s\n", "Station title", "Station-id", "Bikes", "Locks")
+    println("-" * 68)
 
-    println(s" Station title (Station-id)        Bikes       Locks") // TODO Formatert med faste kolonnestørrelser
-    println(" ----------------------------------------------------")
     status.stations.foreach(
       station => {
-        println(s" $stativNavn      (${station.id})              ${station.availability.bikes}           ${station.availability.locks}")
+        println(f" $stativNavn%-30s ${station.id}%10d ${station.availability.bikes}%10d ${station.availability.locks}%10d")
 
         def stativNavn = sykkelstativStatus.stations.find(stativ => stativ.id == station.id).get.title
       }
     )
+  }
+
+  def exit(message: String) = {
+    println(s"TERMINAL ERROR: ${message}")
+    System.exit(1)
   }
 }
 
@@ -41,6 +46,7 @@ class Sykkeloppsett(private val konfigfil: String) {
   import java.util.Properties
 
   import scala.collection.JavaConverters._
+  import ThomasErUteAaSykler.exit
 
   val prop: Map[String, String] =
     try {
@@ -49,13 +55,24 @@ class Sykkeloppsett(private val konfigfil: String) {
       javaProp.asScala.toMap
     } catch {
       case ex: Exception => {
-        println(s"TERMINAL ERROR: ${ex.getMessage}")
-        System.exit(1)
+        exit(ex.getMessage)
         null
       }
     }
 
-  val clientIdentifier: String = prop("client.identifier")
-  val host: String = prop("server.host")
-  val port: Int = prop("server.port").toInt
+  val clientIdentifier: String = prop.getOrElse("client.identifier", "")
+  if (clientIdentifier.trim.isEmpty) {
+    exit("Client identifier is missing in config file.")
+  }
+
+  val host: String = prop.getOrElse("server.host", "")
+  if (host.trim.isEmpty) {
+    exit("host name is missing in config file.")
+  }
+
+  val port: Int = {
+    if ( prop.getOrElse("server.port", "").trim.isEmpty )
+      exit("Host port is missing in config file")
+    prop("server.port").toInt
+  }
 }

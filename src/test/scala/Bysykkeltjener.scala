@@ -8,13 +8,6 @@ object Bysykkeltjener extends App {
 
   get("/ping", (req, res) => s"I'm awake!? Promise! (${new Date()})\n")
 
-  get("/avail", (req, res) => {
-    // TODO Hvordan logge?
-    println(s"Got ${req.url()} request from ${req.ip()}")
-    res.`type`("application/json")
-    s"""{ "stations":"aaaa", "updated_at":"${new Date()}", "refresh_rate":7.0 }\n  """"
-  })
-
   get("/stations", (req, res) => {
     println(s"Got ${req.url()} request from ${req.ip()}")
     res.`type`("application/json")
@@ -92,6 +85,38 @@ object Bysykkeltjener extends App {
                  "longitude": 10.7547327876091
                }
              ]
+           },
+           {
+             "id": 7,
+             "title": "Ullevålsveien",
+             "subtitle": "langs Vår Frelsers gravlund",
+             "number_of_locks": 9,
+             "center": {
+               "latitude": 59.917879,
+               "longitude": 10.754906
+             },
+             "bounds": [
+               {
+                 "latitude": 59.91771363912163,
+                 "longitude": 10.7547327876091
+               },
+               {
+                 "latitude": 59.91789110461389,
+                 "longitude": 10.755239725112913
+               },
+               {
+                 "latitude": 59.9180309252425,
+                 "longitude": 10.755076110363005
+               },
+               {
+                 "latitude": 59.917846738329786,
+                 "longitude": 10.754566490650177
+               },
+               {
+                 "latitude": 59.91771363912163,
+                 "longitude": 10.7547327876091
+               }
+             ]
            }
          ]
        }
@@ -112,6 +137,13 @@ object Bysykkeltjener extends App {
         }
       },
       {
+        "id": 7,
+        "availability": {
+          "bikes": 19,
+          "locks": 24
+        }
+      },
+      {
         "id": 191,
         "availability": {
           "bikes": 2,
@@ -122,6 +154,6 @@ object Bysykkeltjener extends App {
       "updated_at": "2016-09-09T09:50:33+00:00",
       "refresh_rate": 10.0
     }
-      """   //  "updated_at": "2016-09-09T09:50:33+00:00", "updated_at": "${new Date()}",
+      """
   })
 }
