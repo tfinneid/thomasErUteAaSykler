@@ -20,13 +20,13 @@ class BysykkelTjenesteHjelper(val sykkeloppsett: Sykkeloppsett) {
 
 
   def getAvailability: BysykkelStatus = {
-    val httpResponse = Unirest.get(s"http://$host:$port/stations/availability").asString
+    val httpResponse = Unirest.get(s"http://$host:$port/api/v1/stations/availability").asString
     validate(httpResponse)
     mapper.readValue[BysykkelStatus](httpResponse.getBody, classOf[BysykkelStatus])
   }
 
   def getStations: SykkelstativStatus = {
-    val httpResponse = Unirest.get(s"http://$host:$port/stations").asString
+    val httpResponse = Unirest.get(s"http://$host:$port/api/v1/stations").asString
     validate(httpResponse)
     mapper.readValue[SykkelstativStatus](httpResponse.getBody, classOf[SykkelstativStatus])
   }

@@ -12,7 +12,7 @@ object Bysykkeltjener extends App {
     s"I'm awake!? Promise! (${new Date()})\n"
   })
 
-  get("/stations", (req, res) => {
+  get("/api/v1/stations", (req, res) => {
     log(req)
     res.`type`("application/json")
     s"""
@@ -127,7 +127,7 @@ object Bysykkeltjener extends App {
       """
   })
 
-  get("/stations/availability", (req, res) => {
+  get("/api/v1/stations/availability", (req, res) => {
     log(req)
     res.`type`("application/json")
     s"""
@@ -148,6 +148,13 @@ object Bysykkeltjener extends App {
         }
       },
       {
+        "id": 345,
+        "availability": {
+          "bikes": 19,
+          "locks": 24
+        }
+      },
+      {
         "id": 191,
         "availability": {
           "bikes": 2,
@@ -161,12 +168,12 @@ object Bysykkeltjener extends App {
       """
   })
 
-  get("/stations/availability/empty", (req, res) => {
+  get("/api/v1/stations/availability/empty", (req, res) => {
     log(req)
     ""
   })
 
-  get("/stations/availability/big", (req, res) => {
+  get("/api/v1/stations/availability/big", (req, res) => {
     log(req)
     res.`type`("application/json")
     val bigResponse =

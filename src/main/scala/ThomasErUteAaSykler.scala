@@ -39,7 +39,12 @@ object ThomasErUteAaSykler extends App {
       station => {
         println(f" $stativNavn%-30s ${station.id}%10d ${station.availability.bikes}%10d ${station.availability.locks}%10d")
 
-        def stativNavn = sykkelstativStatus.stations.find(stativ => stativ.id == station.id).get.title
+        def stativNavn = {
+          sykkelstativStatus.stations.find(stativ => stativ.id == station.id) match {
+            case Some(s: SykkelStativ) => s.title
+            case None => "Uten navn"
+          }
+        }
       }
     )
   }
