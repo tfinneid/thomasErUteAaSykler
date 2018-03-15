@@ -1,0 +1,27 @@
+
+- store datamengder
+- feil contenttype
+- url finnes ikke
+- server er nede
+- port mangler
+- jackson mapping feil
+
+Exception in thread "main" com.fasterxml.jackson.databind.JsonMappingException: No content to map due to end-of-input
+ at [Source: ; line: 1, column: 0]
+	at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:256)
+	at com.fasterxml.jackson.databind.ObjectMapper._initForReading(ObjectMapper.java:3851)
+	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:3792)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:2797)
+	at BysykkelTjenesteHjelper.getAvailability(BysykkelTjenesteHjelper.scala:26)
+	at ThomasErUteAaSykler$.delayedEndpoint$ThomasErUteAaSykler$1(ThomasErUteAaSykler.scala:16)
+	at ThomasErUteAaSykler$delayedInit$body.apply(ThomasErUteAaSykler.scala:10)
+	at scala.Function0.apply$mcV$sp(Function0.scala:34)
+	at scala.Function0.apply$mcV$sp$(Function0.scala:34)
+	at scala.runtime.AbstractFunction0.apply$mcV$sp(AbstractFunction0.scala:12)
+	at scala.App.$anonfun$main$1$adapted(App.scala:76)
+	at scala.collection.immutable.List.foreach(List.scala:378)
+	at scala.App.main(App.scala:76)
+	at scala.App.main$(App.scala:74)
+	at ThomasErUteAaSykler$.main(ThomasErUteAaSykler.scala:10)
+	at ThomasErUteAaSykler.main(ThomasErUteAaSykler.scala)
+

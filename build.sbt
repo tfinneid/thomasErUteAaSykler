@@ -4,7 +4,8 @@ version := "1.0"
 scalaVersion := "2.12.1"
 cancelable in Global := true
 
-//packageOptions in (Compile, packageBin) += Package.ManifestAttributes( "Main-Class" -> "com.Main" )
+mainClass in (Compile,run) := Some("ThomasErUteAaSykler")
+packageOptions in (Compile, packageBin) += Package.ManifestAttributes( "Main-Class" -> "ThomasErUteAaSykler" )
 
 libraryDependencies += "com.mashape.unirest" % "unirest-java" % "1.4.9"
 

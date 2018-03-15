@@ -2,14 +2,18 @@ package tjeneste
 
 import java.util.Date
 
+import spark.Request
 import spark.Spark._
 
 object Bysykkeltjener extends App {
 
-  get("/ping", (req, res) => s"I'm awake!? Promise! (${new Date()})\n")
+  get("/ping", (req, res) => {
+    log(req)
+    s"I'm awake!? Promise! (${new Date()})\n"
+  })
 
   get("/stations", (req, res) => {
-    println(s"Got ${req.url()} request from ${req.ip()}")
+    log(req)
     res.`type`("application/json")
     s"""
        {
@@ -124,7 +128,7 @@ object Bysykkeltjener extends App {
   })
 
   get("/stations/availability", (req, res) => {
-    println(s"Got ${req.url()} request from ${req.ip()}")
+    log(req)
     res.`type`("application/json")
     s"""
     {
@@ -156,4 +160,44 @@ object Bysykkeltjener extends App {
     }
       """
   })
+
+  get("/stations/availability/empty", (req, res) => {
+    log(req)
+    ""
+  })
+
+  get("/stations/availability/big", (req, res) => {
+    log(req)
+    res.`type`("application/json")
+    val bigResponse =
+      """|      {
+         |        "id": 210,
+         |        "availability": {
+         |          "bikes": 7,
+         |          "locks": 3
+         |        }
+         |      },
+         |""".stripMargin * 10000
+
+    s"""
+    {
+      "stations": [
+      $bigResponse
+      {
+        "id": 191,
+        "availability": {
+          "bikes": 2,
+          "locks": 7
+        }
+      }
+      ],
+      "updated_at": "2016-09-09T09:50:33+00:00",
+      "refresh_rate": 10.0
+    }
+      """
+  })
+
+  def log(req: Request): Unit = {
+    println(s"Got ${req.url()} request from ${req.ip()} with client-identifier: ${req.headers("Client-Identifier")}")
+  }
 }

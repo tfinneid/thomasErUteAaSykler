@@ -1,10 +1,13 @@
+
 import java.util.Date
+
+import com.mashape.unirest.http.exceptions.UnirestException
 
 case class BysykkelStatus(stations: List[Station], updated_at: Date, refresh_rate: Double)
 case class Station(id: Int, availability: Availability)
 case class Availability(bikes: Int, locks: Int)
 
-case class SykkelstativStatus(stations: List[SykkelStativ])
+case class SykkelstativStatus(stations: List[SykkelStativ], zz_time: Int)
 case class SykkelStativ(id: Int, title: String, number_of_locks: Int)
 
 object ThomasErUteAaSykler extends App {
@@ -12,12 +15,19 @@ object ThomasErUteAaSykler extends App {
   val sykkellås = new Sykkeloppsett("bysykkel.conf")
   val bysykkelTjeneste = new BysykkelTjenesteHjelper(sykkellås)
 
-  val sykkelstativStatus = bysykkelTjeneste.getStations
-  val bysykkelStatus = bysykkelTjeneste.getAvailability
+  lazy val sykkelstativStatus = bysykkelTjeneste.getStations
 
-  visTabellFormat(bysykkelStatus, sykkelstativStatus)
+  try {
+    val bysykkelStatus = bysykkelTjeneste.getAvailability
 
-  bysykkelTjeneste.shutdown
+    visTabellFormat(bysykkelStatus, sykkelstativStatus)
+  } catch {
+    case se: WebServerException => println(s"FEIL: Noe er galt med serveren, prøv igjen senere.\n$se")
+    case ce: WebClientException => println(s"FEIL: Noe er galt med oppsettet på/spørringen fra -klienten din.\n $ce")
+    case ex: UnirestException => println(s"FEIL: Klarer ikke å fullføre forespøresel til Bysykkeltjeneren.\n$ex")
+  } finally {
+    bysykkelTjeneste.shutdown
+  }
 
   def visTabellFormat(status: BysykkelStatus, sykkelStativer: SykkelstativStatus): Unit = {
 
@@ -35,7 +45,7 @@ object ThomasErUteAaSykler extends App {
   }
 
   def exit(message: String) = {
-    println(s"TERMINAL ERROR: ${message}")
+    println(s"ALVORLIG FEIL: ${message}")
     System.exit(1)
   }
 }
@@ -62,17 +72,17 @@ class Sykkeloppsett(private val konfigfil: String) {
 
   val clientIdentifier: String = prop.getOrElse("client.identifier", "")
   if (clientIdentifier.trim.isEmpty) {
-    exit("Client identifier is missing in config file.")
+    exit("Client-Identifier parameter mangler i konfigurasjonsfilen.")
   }
 
   val host: String = prop.getOrElse("server.host", "")
   if (host.trim.isEmpty) {
-    exit("host name is missing in config file.")
+    exit("Host parameter mangler i konfigurasjonsfilen.")
   }
 
   val port: Int = {
     if ( prop.getOrElse("server.port", "").trim.isEmpty )
-      exit("Host port is missing in config file")
+      exit("Port parameter mangler i konfigurasjonsfilen")
     prop("server.port").toInt
   }
 }
